@@ -26,6 +26,8 @@
 
 #include "Arduino.h"
 
+enum { FORCE , POSITION };
+
 /**
  * [Actuator_ Class PID controller of the axe's Motion]
  * @param inPosition        ADC pin to read the Motion Position
@@ -36,14 +38,20 @@
 class Actuator_
 {
   public:
-    Actuator_ (byte inPosition, byte inForce, byte outCtrlMotion, byte outCtrlDirection) :
-      positionInput(inPosition), forceInput(inForce), ctrlMotionOutput(outCtrlMotion), ctrlDiretionOutput(outCtrlDirection)
-    { }
+    Actuator_(byte inPosition, byte inForce, byte outCtrlMotion, byte outCtrlDirection) :
+      positionInput(inPosition), forceInput(inForce),
+      ctrlMotionOutput(outCtrlMotion), ctrlDiretionOutput(outCtrlDirection)
+    {
+      enabled = false;
+      offset = 0.0;
+    }
     void compute(void);
-    void setPID( double Kp, double Ki, double Kd);
+    void setPID(double Kp, double Ki, double Kd);
+    bool isEnabled(void);
 
   private:
     bool enabled;
+    double offset;
     // ADC input
     byte positionInput;
     byte forceInput;
@@ -51,7 +59,6 @@ class Actuator_
     byte ctrlMotionOutput;
     // Digital output
     byte ctrlDiretionOutput;
-
     // Set Points
     double positionSetpoint;
     double forceSetpoint;

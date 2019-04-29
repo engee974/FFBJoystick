@@ -21,20 +21,24 @@
 ** SOFTWARE.
 */
 
-#include "Actuator.h"
+#ifndef MOTOR_H
+#define MOTOR_H
 
-void Actuator_::compute(){
-  // TODO
-  if (enabled)
-  {
+#include "Arduino.h"
 
-  }
-}
+// BLDC Motors
+#define BLDC_MOTOR
+#define CURRENT_NO_LOAD   0.07  // No Load current
+#define CURRENT_STALL     0.7   // Stall current (Max force)
+#define RPM_NO_LOAD       100   //
+#define RPM_RATED         75
+#define GEAR_RATIO        1/30
 
-void Actuator_::setPID(double Kp, double Ki, double Kd){
-  // TODO
-}
+// DC Motors
+#define DC_MOTOR
 
-bool Actuator_::isEnabled(void){
-  return enabled;
-}
+
+
+
+
+#endif
